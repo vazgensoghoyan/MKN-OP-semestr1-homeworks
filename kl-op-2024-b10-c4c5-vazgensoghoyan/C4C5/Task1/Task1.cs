@@ -1,4 +1,7 @@
-﻿namespace Task1
+﻿using Microsoft.VisualStudio.TestPlatform.Common.DataCollection;
+using System.Data;
+
+namespace Task1
 {
     public class Task1
     {
@@ -7,23 +10,18 @@
          * где NN — длина заданной строки. Например, если задана строка "hello",
          * то результатом должна быть строка "Длина: 5".
          */
-        internal static Int32 StringLength( String s )
-        {
-            throw new NotImplementedException();
-        }
+        internal static Int32 StringLength( String s ) => s.Length;
 
         /*
          * Задание 1.2. Дана непустая строка. Вернуть коды ее первого и последнего символов.
          * Рекомендуется найти специальные функции для вычисления соответствующих символов и их кодов.
          */
-        internal static Tuple<Int32?, Int32?> FirstLastCodes( String s )
-        {
-            throw new NotImplementedException();
-        }
+        internal static Tuple<Int32?, Int32?> FirstLastCodes( String s ) => 
+            Tuple.Create( Code( First(s) ), Code( Last(s) ) );
 
-        private static Char? First( String s ) => throw new NotImplementedException();
-        private static Char? Last( String s ) => throw new NotImplementedException();
-        private static Int32? Code( Char? c ) => throw new NotImplementedException();
+        private static Char? First( String s ) => (s == "") ? null : s[0];
+        private static Char? Last( String s ) => (s == "") ? null : s[ s.Length - 1 ];
+        private static Int32? Code( Char? c ) => c;
 
         /*
          * Задание 1.3. Дана строка. Подсчитать количество содержащихся в ней цифр.
@@ -31,7 +29,12 @@
          */
         internal static Int32 CountDigits( String s )
         {
-            throw new NotImplementedException();
+            int c = 0;
+
+            for (int i = 0; i < s.Length; i++)
+                c += ( 47 < s[i] && s[i] < 59 ) ? 1 : 0;
+
+            return c;
         }
 
         /*
@@ -43,7 +46,7 @@
          */
         internal static Int32 CountDigits2( String s )
         {
-            throw new NotImplementedException();
+            return s.Count( char.IsDigit );
         }
 
         /*
@@ -53,7 +56,18 @@
          */
         internal static Int32 CalcDigits( String expr )
         {
-            throw new NotImplementedException();
+            var value = 0;
+            char op = '+';
+
+            for (int i = 0; i < expr.Length; i++)
+            {
+                if ( char.IsDigit( expr[i] ) )
+                    value += ( (op == '+') ? 1 : -1 ) * (expr[i] - 0);
+                else
+                    op = expr[i];
+            }
+
+            return value;
         }
 
         /*
@@ -62,12 +76,24 @@
          */
         internal static String ReplaceWithString( String s, String s1, String s2 )
         {
-            throw new NotImplementedException();
+            var i = s.IndexOf( s1 );
+
+            if ( i == -1 ) return s;
+
+            var before = s.Substring( 0, i );
+            var after = s.Substring( i + s1.Length, s.Length - i - s1.Length );
+
+            return before + s2 + after;
         }
 
         public static void Main( String[] args )
         {
-            throw new NotImplementedException( "Вызовите здесь все перечисленные в классе функции, как это сделано в предыдущих заданиях" );
+            Console.WriteLine( StringLength( "1234j" ) );
+            Console.WriteLine( FirstLastCodes( "a----b" ) );
+            Console.WriteLine( CountDigits( "abab72b2h4b4h" ) );
+            Console.WriteLine( CountDigits2( "abab72b2h4b4h" ) );
+            Console.WriteLine( CalcDigits( "4+7-2-8" ) );
+            Console.WriteLine( ReplaceWithString( "abcdab", "bcd", "" ) );
         }
     }
 }

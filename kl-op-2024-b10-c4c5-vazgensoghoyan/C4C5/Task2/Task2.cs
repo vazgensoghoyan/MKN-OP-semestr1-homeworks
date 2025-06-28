@@ -1,4 +1,7 @@
-﻿namespace Task2
+﻿using System.Diagnostics.SymbolStore;
+using System.Text;
+
+namespace Task2
 {
     public class Task2
     {
@@ -14,7 +17,23 @@
          */
         internal static String FillWithAsterisks( String s, Int32 n )
         {
-            throw new NotImplementedException();
+            var sb2 = new StringBuilder( n * s.Length );
+
+            for (int i = 0; i < n; i++)
+            {
+                sb2.Append('*');
+            }
+
+            var sb = new StringBuilder( n + n * s.Length );
+            sb.Append( s[0] );
+
+            for (int i = 1; i < s.Length; i++)
+            {
+                sb.Append( sb2 );
+                sb.Append( s[i] );
+            }
+
+            return sb.ToString();
         }
 
         /*
@@ -32,8 +51,29 @@
          */
         internal static String TabulateSquares( Int32 n )
         {
-            throw new NotImplementedException();
+            var lineLength = IntsLength( n, n * n ) + 1;
+            var sb = new StringBuilder( n + n * lineLength );
+
+            for (int i = 1; i <= n; i++)
+            {
+                sb.Append( i );
+                AppendSpaces( SpacesCount( i ) );
+                sb.Append( i * i );
+                sb.Append('\n');
+            }
+
+            return sb.ToString();
+
+            int SpacesCount( int x ) => lineLength - IntsLength( x, x * x );
+
+            void AppendSpaces( int x )
+            {
+                for (int i = 0; i < x; i++) sb.Append(' ');
+            }
         }
+
+        private static int IntsLength( int x, int y ) => IntLength(x) + IntLength(y);
+        private static int IntLength( int n ) => n.ToString().Length;
 
         public static void Main( String[] args )
         {
