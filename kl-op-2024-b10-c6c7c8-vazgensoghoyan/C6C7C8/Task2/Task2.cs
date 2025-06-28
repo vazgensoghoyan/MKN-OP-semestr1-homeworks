@@ -1,7 +1,4 @@
-﻿using NUnit.Framework;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 
 namespace Task2
 {
@@ -14,7 +11,9 @@ namespace Task2
         Int32 ResourceId { get; }
     }
 
-    /* Это наш управляемый ресурс */
+    /*
+     * Это наш управляемый ресурс
+     */
     public class ManagedResource : IManagedResource
     {
         public ManagedResource( Int32 id )
@@ -106,48 +105,26 @@ namespace Task2
      */
     public class ResourcePool : IDisposable
     {
-        private Queue<ManagedResource> _resources;
-        private HashSet<ManagedResource> _rent;
-        private int _k;
-
         public ResourcePool()
         {
-            _resources = new Queue<ManagedResource>();
-            _rent = new HashSet<ManagedResource>();
-            _k = 1;
+            throw new NotImplementedException( "Здесь должна быть логика инициализации пула объектов" );
         }
 
         public IManagedResource Rent()
         {
-            ManagedResource a;
-
-            if ( _resources.Count == 0 )
-                a = new ManagedResource(_k++);
-            else
-                a = _resources.Dequeue();
-
-            _rent.Add( a );
-
-            return new ManagedResourceHolder( this, a );
+            throw new NotImplementedException( "Здесь должна быть логика создающая объект, если его нет и возвращающая декоратор ManagedResourceHolder" );
         }
 
         public void Release( IManagedResource resource )
         {
-            var a = (ManagedResource)resource;
-
-            _resources.Enqueue( a );
-            _rent.Remove( a );
+            throw new NotImplementedException( "Здесь должна быть логика возвращающая объект в пул объектов" );
         }
 
         #region IDisposable
 
         public void Dispose()
         {
-            while ( _resources.Count > 0 )
-                _resources.Dequeue().Dispose();
-
-            foreach ( var a in _rent )
-                a.Dispose();
+            throw new NotImplementedException( "Здесь должна быть логика разрушения объектов, что еще живут в пуле" );
         }
 
         #endregion

@@ -48,33 +48,12 @@ namespace Task5
 
         internal static BigInteger Fib( Int32 n )
         {
-            if ( n < 2 ) return n;
-
-            BigInteger a0 = 0,
-                       a1 = 1;
-
-            while (n-- > 1)
-                ( a0, a1 ) = ( a1, a0 + a1 );
-
-            return a1;
+            throw new NotImplementedException();
         }
 
         internal static void ComputeFib( String[] args )
         {
-            int n;
-
-            if ( args.Length > 0 ) 
-            {
-                n = int.Parse( args[0] );
-            }
-            else
-            {
-                n = int.Parse( Console.ReadLine() );
-            }
-
-            if ( n < 0 ) throw new Exception();
-
-            Console.WriteLine( Fib( n ) );
+            throw new NotImplementedException();
         }
     }
 }

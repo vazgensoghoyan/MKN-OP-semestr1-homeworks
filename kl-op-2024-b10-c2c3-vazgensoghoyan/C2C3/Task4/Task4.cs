@@ -1,6 +1,4 @@
-﻿using NUnit.Framework.Internal;
-
-namespace Task4
+﻿namespace Task4
 {
     public class Task4
     {
@@ -20,23 +18,7 @@ namespace Task4
          */
         internal static void PrintFrame( Int32 width, Int32 height, Char frameChar = '*' )
         {
-            for (int i = 0; i < width; i++)
-                Console.Write(frameChar);
-
-            Console.WriteLine();
-
-            for (int i = 0; i < height - 2; i++)
-            {
-                Console.Write(frameChar);
-                for (int j = 0; j < width - 2; j++)
-                    Console.Write(' ');
-                Console.Write("{0}\n", frameChar);
-            }
-
-            for (int i = 0; i < width; i++)
-                Console.Write(frameChar);
-
-            Console.WriteLine();
+            throw new NotImplementedException();
         }
 
         /*
@@ -44,19 +26,7 @@ namespace Task4
          */
         internal static void PrintFrame2( Int32 width, Int32 height, Char frameChar = '*' )
         {
-            string F( string y, int x )
-            {
-                var res = string.Empty;
-                while (x-- > 0)
-                    res += y;
-                return res;
-            }
-
-            var line1 = F( frameChar.ToString(), width ) + '\n';
-            var line2 = frameChar + F( " ", width - 2 ) + frameChar + '\n';
-            var middle = F( line2, height - 2 );
-
-            Console.Write( "{0}{1}{2}", line1, middle, line1 );
+            throw new NotImplementedException();
         }
 
         /*
@@ -67,8 +37,7 @@ namespace Task4
          */
         internal static Int64 Gcd( Int64 a, Int64 b )
         {
-            if (b == 0) return a;
-            return Gcd(b, a % b);
+            throw new NotImplementedException();
         }
 
         /*
@@ -78,24 +47,13 @@ namespace Task4
          */
         internal static Double ExpTaylor( Double x, Int32 n )
         {
-            var z = 1d;
-            var res = 0d;
-
-            for (int i = 1; i <= n; i++)
-            {
-                res += z;
-                z *= x / i;
-            }
-
-            return res;
+            throw new NotImplementedException();
         }
 
         public static void Main( String[] args )
         {
             PrintFrame( 5, 3, '+' );
-            PrintFrame2( 4, 4, 'p' );
-            Console.WriteLine( Gcd( 10, 15 ) );
-            Console.WriteLine( ExpTaylor( 1, 1000 ) );
+            throw new NotImplementedException( "Вызовите здесь все перечисленные в классе функции, как это сделано в предыдущих заданиях" );
         }
     }
 }
