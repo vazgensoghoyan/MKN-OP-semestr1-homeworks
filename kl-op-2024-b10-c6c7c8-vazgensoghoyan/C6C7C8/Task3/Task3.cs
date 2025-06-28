@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Threading;
 
 namespace Task3
@@ -15,21 +16,35 @@ namespace Task3
      */
     public class Task5
     {
-        // В этой части класса можно резвиться как хотите :)
+        private static AutoResetEvent _are = new(true);
+        private int queue = 1;
+
+        private void A(int i)
+        {
+            _are.WaitOne();
+            while ( queue != i )
+            {
+                _are.Set();
+                _are.WaitOne();
+            }
+            queue++;
+            PrintThreadNumber( i );
+            _are.Set();
+        }
 
         private void Thread1Main()
         {
-            PrintThreadNumber( 1 );
+            A( 1 );
         }
 
         private void Thread2Main()
         {
-            PrintThreadNumber( 2 );
+            A( 2 );
         }
 
         private void Thread3Main()
         {
-            PrintThreadNumber( 3 );
+            A( 3 );
         }
 
         #region Не изменяйте код внутри этого региона, это часть тестов

@@ -32,9 +32,11 @@ namespace Task1
 
         public CrazyCollection( Char headChar, Int32 headCharCount, String middle, Char tailChar, Int32 tailCharCount )
         {
+            if (headCharCount < 0 || tailCharCount < 0) throw new Exception();
+
             _headChar = headChar;
             _headCharCount = headCharCount;
-            _middle = middle;
+            _middle = middle ?? "";
             _tailChar = tailChar;
             _tailCharCount = tailCharCount;
         }
@@ -43,7 +45,7 @@ namespace Task1
 
         public IEnumerator<Char> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return new CrazyEnumerator( _headChar, _headCharCount, _middle, _tailChar, _tailCharCount );
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -56,26 +58,62 @@ namespace Task1
 
     public class CrazyEnumerator : IEnumerator<Char>
     {
+        private readonly Char _headChar;
+        private readonly Int32 _headCharCount;
+        private readonly String _middle;
+        private readonly Char _tailChar;
+        private readonly Int32 _tailCharCount;
+
+        private int _position = -1;
+        private readonly int _length;
+
+        public CrazyEnumerator( Char headChar, Int32 headCharCount, String middle, Char tailChar, Int32 tailCharCount )
+        {
+            _headChar = headChar;
+            _headCharCount = headCharCount;
+            _middle = middle;
+            _tailChar = tailChar;
+            _tailCharCount = tailCharCount;
+
+            _length = headCharCount + middle.Length + tailCharCount;
+        }
 
         #region IEnumerator<Char>
 
         public Boolean MoveNext()
         {
-            throw new NotImplementedException();
+            _position++;
+            return ( _position < _length );
+
         }
 
         public void Reset()
         {
-            throw new NotImplementedException();
+            _position = -1;
         }
 
-        public Char Current { get; }
+        public Char Current 
+        {
+            get 
+            {
+                try
+                {
+                    if ( _position < _headCharCount ) return _headChar;
+                    if ( _position >= _headCharCount + _middle.Length ) return _tailChar;
+                    return _middle[ _position - _headCharCount ];
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    throw new Exception();
+                }
+            }
+        }
 
         Object IEnumerator.Current => Current;
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            return;
         }
 
         #endregion

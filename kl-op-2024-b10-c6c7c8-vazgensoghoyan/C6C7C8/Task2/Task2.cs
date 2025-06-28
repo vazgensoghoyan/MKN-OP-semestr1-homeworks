@@ -1,4 +1,7 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Task2
 {
@@ -11,9 +14,7 @@ namespace Task2
         Int32 ResourceId { get; }
     }
 
-    /*
-     * Это наш управляемый ресурс
-     */
+    /* Это наш управляемый ресурс */
     public class ManagedResource : IManagedResource
     {
         public ManagedResource( Int32 id )
@@ -105,26 +106,48 @@ namespace Task2
      */
     public class ResourcePool : IDisposable
     {
+        private Queue<ManagedResource> _resources;
+        private HashSet<ManagedResource> _rent;
+        private int _k;
+
         public ResourcePool()
         {
-            throw new NotImplementedException( "Здесь должна быть логика инициализации пула объектов" );
+            _resources = new Queue<ManagedResource>();
+            _rent = new HashSet<ManagedResource>();
+            _k = 1;
         }
 
         public IManagedResource Rent()
         {
-            throw new NotImplementedException( "Здесь должна быть логика создающая объект, если его нет и возвращающая декоратор ManagedResourceHolder" );
+            ManagedResource a;
+
+            if ( _resources.Count == 0 )
+                a = new ManagedResource(_k++);
+            else
+                a = _resources.Dequeue();
+
+            _rent.Add( a );
+
+            return new ManagedResourceHolder( this, a );
         }
 
         public void Release( IManagedResource resource )
         {
-            throw new NotImplementedException( "Здесь должна быть логика возвращающая объект в пул объектов" );
+            var a = (ManagedResource)resource;
+
+            _resources.Enqueue( a );
+            _rent.Remove( a );
         }
 
         #region IDisposable
 
         public void Dispose()
         {
-            throw new NotImplementedException( "Здесь должна быть логика разрушения объектов, что еще живут в пуле" );
+            while ( _resources.Count > 0 )
+                _resources.Dequeue().Dispose();
+
+            foreach ( var a in _rent )
+                a.Dispose();
         }
 
         #endregion
