@@ -10,9 +10,9 @@
          * Задание 3.1. Для данного вещественного x найти значение следующей функции f, принимающей значения целого типа:
          * 	        0,	если x < 0,
          * f(x) = 	1,	если x принадлежит [0, 1), [2, 3), …,
-                   −1,	если x принадлежит [1, 2), [3, 4), … .
+                    −1,	если x принадлежит [1, 2), [3, 4), … .
          */
-        internal static Double F( Double x ) => throw new NotImplementedException();
+        internal static Double F( Double x ) => (x < 0) ? 0 : (x % 2 < 1) ? 1 : -1;
 
         /*
          * Задание 3.2. Дан номер года (положительное целое число). Определить количество дней в этом году,
@@ -20,7 +20,8 @@
          * делящийся на 4, за исключением тех годов, которые делятся на 100 и не делятся на 400
          * (например, годы 300, 1300 и 1900 не являются високосными, а 1200 и 2000 — являются).
          */
-        internal static Int32 NumberOfDays( Int32 year ) => throw new NotImplementedException();
+        internal static Int32 NumberOfDays( Int32 year ) => 
+            (year % 100 == 0) ? ((year % 400 == 0) ? 366 : 365) : ((year % 4 == 0) ? 366 : 365);
 
         /*
          * Задание 3.3. Локатор ориентирован на одну из сторон света («С» — север, «З» — запад,
@@ -31,9 +32,19 @@
          */
         internal static Char Rotate2( Char orientation, Int32 cmd1, Int32 cmd2 )
         {
-            Char rotate1( Char orientation, Int32 cmd ) => throw new NotImplementedException();
+            char[] ors = new char[] { 'С', 'З', 'Ю', 'В' };
 
-            throw new NotImplementedException();
+            int index( char or )
+            {
+                for ( int i = 0; i < ors.Length; i++ )
+                    if ( ors[i] == or )
+                        return i;
+                return -1;
+            }
+
+            Char rotate1( Char or, Int32 cmd ) => ors[ (cmd + index(or) + 4) % 4 ];
+
+            return rotate1( orientation, cmd1 + cmd2 );
         }
 
         /*
@@ -47,12 +58,27 @@
          */
         internal static String AgeDescription( Int32 age )
         {
-            throw new NotImplementedException();
+            var words = new string[] { "", "один ", "два ", "три ", "четыре ", "пять ",
+                                            "шесть ", "семь ", "восемь ", "девять ",
+                                            "двадцать ", "тридцать ", "сорок ",
+                                            "пятьдесят ", "шестьдесят " };
+
+            var a = age / 10;
+            var b = age % 10;
+
+            var sentence = words[a + 8] + words[b];
+
+            sentence += (b == 1) ? "год" : (1 < b && b < 5) ? "года" : "лет";
+
+            return sentence;
         }
 
         public static void Main( String[] args )
         {
-            throw new NotImplementedException( "Вызовите здесь все перечисленные в классе функции, как это сделано в предыдущих заданиях" );
+            Console.WriteLine( F(1.9) );
+            Console.WriteLine( NumberOfDays(300) );
+            Console.WriteLine( AgeDescription(29) );
+            Console.WriteLine( F(1.9) );
         }
     }
 }

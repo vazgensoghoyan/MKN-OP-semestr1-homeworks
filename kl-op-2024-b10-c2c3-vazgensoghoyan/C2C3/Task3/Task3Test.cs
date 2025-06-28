@@ -10,28 +10,43 @@ public class Tests
     public void FTest()
     {
         That( F( 0.0 ), Is.EqualTo( 1.0 ).Within( 1e-5 ) );
-        throw new NotImplementedException( "Необходимо добавить больше тестов" );
+        That( F( 0.5 ), Is.EqualTo( 1.0 ).Within( 1e-5 ) );
+        That( F( -3.0 ), Is.EqualTo( 0.0 ).Within( 1e-5 ) );
+        That( F( 1.5 ), Is.EqualTo( -1.0 ).Within( 1e-5 ) );
+        That( F( 2.4 ), Is.EqualTo( 1.0 ).Within( 1e-5 ) );
     }
 
     [Test]
     public void NumberOfDaysTest()
     {
         That( NumberOfDays( 2021 ), Is.EqualTo( 365 ) );
-        throw new NotImplementedException( "Необходимо добавить больше тестов" );
+        
+        That( NumberOfDays( 300 ), Is.EqualTo( 365 ) );
+        That( NumberOfDays( 1300 ), Is.EqualTo( 365 ) );
+        That( NumberOfDays( 1900 ), Is.EqualTo( 365 ) );
+
+        That( NumberOfDays( 1200 ), Is.EqualTo( 366 ) );
+        That( NumberOfDays( 2000 ), Is.EqualTo( 366 ) );
     }
 
     [Test]
     public void Rotate2Test()
     {
         That( Rotate2( 'С', 1, -1 ), Is.EqualTo( 'С' ) );
-        throw new NotImplementedException( "Необходимо добавить больше тестов" );
+
+        That( Rotate2( 'С', 2, -1 ), Is.EqualTo( 'З' ) );
     }
 
     [Test]
     public void AgeDescriptionTest()
     {
         That( AgeDescription( 42 ), Is.EqualTo( "сорок два года" ) );
-        throw new NotImplementedException( "Необходимо добавить больше тестов" );
+
+        That( AgeDescription( 20 ), Is.EqualTo( "двадцать лет" ) );
+        That( AgeDescription( 21 ), Is.EqualTo( "двадцать один год" ) );
+        That( AgeDescription( 37 ), Is.EqualTo( "тридцать семь лет" ) );
+        That( AgeDescription( 60 ), Is.EqualTo( "шестьдесят лет" ) );
+        That( AgeDescription( 49 ), Is.EqualTo( "сорок девять лет" ) );
     }
 
     [Test]
