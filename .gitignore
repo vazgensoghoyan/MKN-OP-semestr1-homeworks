@@ -1,12 +1,12 @@
 .DS_Store
-/*/*/bin/
-/*/*/obj/
+/*/bin/
+/*/obj/
 # Default ignored files
 /shelf/
 /workspace.xml
 # Rider ignored files
-/*/.idea/*
-/*/.idea/
+/.idea/*
+/.idea/
 /modules.xml
 /contentModel.xml
 /projectSettingsUpdater.xml
@@ -16,7 +16,12 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
-.vs/
+# VS
+/.vc/*
+/.vc/
+/.vscode/*
+/.vscode/
+.vc/
 .vscode/
 .idea/
 obj/
